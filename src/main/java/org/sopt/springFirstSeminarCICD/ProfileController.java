@@ -13,6 +13,7 @@ public class ProfileController {
 
     private final Environment env;
     private static final String NULL = "";
+    private final String name;
 
     @GetMapping("/profile")
     public String getProfile() {
