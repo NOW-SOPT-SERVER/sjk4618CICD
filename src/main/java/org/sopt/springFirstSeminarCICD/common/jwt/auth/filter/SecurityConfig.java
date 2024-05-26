@@ -15,12 +15,13 @@ import org.springframework.security.config.annotation.web.configurers.RequestCac
 @RequiredArgsConstructor
 @EnableWebSecurity //web Security를 사용할 수 있게
 public class SecurityConfig {
-    private final JwtAuthenticationFilter jwtAuthenticationFilter;
-    private final CustomJwtAuthenticationEntryPoint customJwtAuthenticationEntryPoint;
+    private final org.sopt.springFirstSeminar.common.jwt.auth.filter.JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final org.sopt.springFirstSeminar.common.jwt.auth.filter.CustomJwtAuthenticationEntryPoint customJwtAuthenticationEntryPoint;
     private final CustomAccessDeniedHandler customAccessDeniedHandler;
 
 
     private static final String[] AUTH_WHITE_LIST = {"/api/v1/member"};
+    private static final String[] ACTUATOR = {"/actuator/health"};
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -37,6 +38,7 @@ public class SecurityConfig {
 
         http.authorizeHttpRequests(auth -> {
                     auth.requestMatchers(AUTH_WHITE_LIST).permitAll();
+                    auth.requestMatchers(ACTUATOR).permitAll();
                     auth.anyRequest().authenticated();
                 })
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
