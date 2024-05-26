@@ -43,11 +43,11 @@ echo "> nginx 포트 스위칭"
 echo "set \$service_url http://127.0.0.1:${GREEN_PORT};" | sudo tee /etc/nginx/conf.d/service-url.inc
 sudo nginx -s reload
 
-echo "> $GREEN_PROFILE 10초 후 Health check 시작"
+echo "> $GREEN_PROFILE 20초 후 Health check 시작"
 echo "> curl -s http://localhost:$GREEN_PORT/actuator/health "
-sleep 10
+sleep 20
 
-for retry_count in {1..10}
+for retry_count in {1..20}
 do
   response=$(curl -s http://localhost:$GREEN_PORT/actuator/health)
   up_count=$(echo $response | grep 'UP' | wc -l)
@@ -62,7 +62,7 @@ do
       echo "> Health check: ${response}"
   fi
 
-  if [ $retry_count -eq 10 ]
+  if [ $retry_count -eq 20 ]
   then
     echo "> Health check 실패. "
     echo "> Nginx에 연결하지 않고 배포를 종료합니다."
@@ -70,7 +70,7 @@ do
   fi
 
   echo "> Health check 연결 실패. 재시도..."
-  sleep 10
+  sleep 20
 done
 
 echo "> $BLUE_PROFILE 에서 구동중인 애플리케이션 pid 확인"
