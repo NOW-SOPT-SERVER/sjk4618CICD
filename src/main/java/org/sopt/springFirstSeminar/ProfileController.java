@@ -1,4 +1,4 @@
-package org.sopt.springFirstSeminarCICD;
+package org.sopt.springFirstSeminar;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.env.Environment;
